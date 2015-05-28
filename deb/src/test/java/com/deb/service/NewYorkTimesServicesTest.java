@@ -1,5 +1,7 @@
 package com.deb.service;
 
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,11 +28,11 @@ public class NewYorkTimesServicesTest {
 		Categories categoryList = new Categories();
 		for (int i = 0; i < categoryDetails.length(); i++) {
 			JSONObject eachCategory = (JSONObject) categoryDetails.get(i);
-			// System.out.println(eachCategory.toString());
+			
 			Category category = gson.fromJson(eachCategory.toString(),
 					Category.class);
 			Assert.assertNotNull(category);
-			// System.out.println(category);
+			
 			categoryList.getCategoryList().add(category);
 		}
 	}
@@ -63,14 +65,13 @@ public class NewYorkTimesServicesTest {
 			JSONArray detailObject = (JSONArray) details
 					.get(URLConstants.DETAILS);
 			Assert.assertTrue("Details set,  should not have exception", true);
-//			Gson gson = new Gson();
+
 			for (int i = 0; i < detailObject.length(); i++) {
 				JSONArray object = (JSONArray) detailObject.get(i);
 				for (int j = 0; j < object.length(); j++) {
 					
-
 					JSONObject categoryDetails = (JSONObject) object.get(j);
-					System.out.println(categoryDetails.get("url")+ " : " + categoryDetails.get("abstract"));
+					Assert.assertNotNull(categoryDetails);
 					
 					
 				}
@@ -97,4 +98,11 @@ public class NewYorkTimesServicesTest {
 		Assert.assertTrue(categories.getCategoryList().size() > 0);
 	}
 
+	@Test
+	public void testListCategoriesBySectionName() {
+		NewYorkTimesServices services = new NewYorkTimesImpl();
+		List<CategoryDetails> details = services.listCategoryDetails("admin");
+		Assert.assertNotNull(details);
+		Assert.assertTrue(details.size() > 0);
+	}
 }

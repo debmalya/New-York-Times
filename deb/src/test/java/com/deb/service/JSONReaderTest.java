@@ -20,9 +20,7 @@ public class JSONReaderTest {
 			Assert.assertNotNull(sectionResults);
 
 
-			for (int i = 0; i < sectionResults.length(); i++) {
-				System.out.println(sectionResults.get(i));
-			}
+			
 
 		} catch (JSONException e) {
 			e.printStackTrace();

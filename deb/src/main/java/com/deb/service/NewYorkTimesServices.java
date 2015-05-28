@@ -38,4 +38,13 @@ public interface NewYorkTimesServices {
 	 */
 	List<CategoryDetails> listCategoryDetails(JSONArray categories,int categoryIndex);
 	
+	/**
+	 * List category details for the specified section.
+	 */
+	List<CategoryDetails> listCategoryDetails(JSONArray categories,String section);
+	
+	/**
+	 * List category details by section name.
+	 */
+	List<CategoryDetails> listCategoryDetails(String nyt_categories);
 }

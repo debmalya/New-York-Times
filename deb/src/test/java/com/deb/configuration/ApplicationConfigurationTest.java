@@ -41,7 +41,7 @@ public class ApplicationConfigurationTest {
 		Assert.assertNotNull(mongo);
 	}
 
-	@Test
+//	@Test
 	public void testCreateRetrieveObject() {
 		DB db = ctx.getBean(DB.class);
 		Assert.assertNotNull(db);
@@ -69,7 +69,7 @@ public class ApplicationConfigurationTest {
 		
 	}
 
-	@Test
+//	@Test
 	public void printAll() {
 		DB db = ctx.getBean(DB.class);
 		Assert.assertNotNull(db);

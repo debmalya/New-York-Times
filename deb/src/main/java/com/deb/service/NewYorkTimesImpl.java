@@ -98,30 +98,89 @@ public class NewYorkTimesImpl implements NewYorkTimesServices {
 		if (categories != null && categoryIndex > -1) {
 			JSONObject category = (JSONObject) categories.get(categoryIndex);
 			String sectionName = (String) category.get(URLConstants.SECTION);
-			if (sectionName != null) {
-				sectionName = sectionName.replace(" ", "%20");
-				JSONArray detailResult = getJSONResult(URLConstants.FIRST_PART_DETAIL_URL
-						+ sectionName + URLConstants.LAST_PART_DETAIL_URL);
-				category.append(URLConstants.DETAILS, detailResult);
-
-				for (int i = 0; i < detailResult.length(); i++) {
-					JSONArray object = (JSONArray) detailResult.get(i);
-					for (int j = 0; j < object.length(); j++) {
-
-						JSONObject categoryDetailsJSON = (JSONObject) object.get(j);
-						System.out.println(categoryDetailsJSON.get("url") + " : "
-								+ categoryDetailsJSON.get("abstract"));
-						CategoryDetails categoryDetails = new CategoryDetails();
-						categoryDetails.setTitle((String)categoryDetailsJSON.get("abstract"));
-						categoryDetails.setUrl((String)categoryDetailsJSON.get("url"));
-						categoryDetailList.add(categoryDetails);
-					}
-				}
-
-			}
+			categoryDetailList = getSectionDetails(category, sectionName);
 		}
 
 		return categoryDetailList;
+	}
+
+	private List<CategoryDetails> getSectionDetails(JSONObject category,
+			String sectionName) {
+		List<CategoryDetails> categoryDetailList = new ArrayList<CategoryDetails>();
+		if (sectionName != null) {
+			sectionName = sectionName.replace(" ", "%20");
+			categoryDetailList = getCategoryDetailsBySection(sectionName);
+
+		}
+		return categoryDetailList;
+	}
+
+	private List<CategoryDetails> getCategoryDetailsBySection(String sectionName) {
+		if (sectionName != null) {
+			sectionName = sectionName.replace(" ", "%20");
+		}
+		JSONArray detailResult = getJSONResult(URLConstants.FIRST_PART_DETAIL_URL
+				+ sectionName + URLConstants.LAST_PART_DETAIL_URL);
+
+		List<CategoryDetails> categoryDetailList = new ArrayList<CategoryDetails>();
+
+		if (detailResult != null) {
+			for (int i = 0; i < detailResult.length(); i++) {
+
+				JSONObject categoryDetailsJSON = (JSONObject) detailResult
+						.get(i);
+
+				CategoryDetails categoryDetails = new CategoryDetails();
+				categoryDetails.setTitle((String) categoryDetailsJSON
+						.get("abstract"));
+				categoryDetails.setUrl((String) categoryDetailsJSON.get("url"));
+				categoryDetailList.add(categoryDetails);
+
+			}
+		}
+		return categoryDetailList;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.deb.service.NewYorkTimesServices#listCategoryDetails(org.json.JSONArray
+	 * , java.lang.String)
+	 */
+	@Override
+	public List<CategoryDetails> listCategoryDetails(JSONArray categories,
+			String section) {
+		int index = getIndex(categories, section);
+		if (index > -1) {
+			return getSectionDetails((JSONObject) categories.get(index),
+					section);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @param categories
+	 * @param section
+	 * @return
+	 */
+	private int getIndex(JSONArray categories, String section) {
+		for (int i = 0; i < categories.length(); i++) {
+			JSONObject eachCategory = (JSONObject) categories.get(i);
+			if (eachCategory.get("section").equals(section)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * @param nyt_categories
+	 */
+	public List<CategoryDetails> listCategoryDetails(String nyt_categories) {
+		return getCategoryDetailsBySection(nyt_categories);
+
 	}
 
 }
