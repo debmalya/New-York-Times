@@ -10,7 +10,6 @@
 
 <p>  
 <header>
-<!--  <img src="https://media.licdn.com/media/p/5/005/090/1b9/144bbda.png"></img> -->
 </header>
 <h1>
 	Rest with JSON and MongoDB  
@@ -24,5 +23,4 @@ Register Candidate
 </form>
 </p>
 </body>
-<!--  <footer><jsp:include page="footer.jsp"/></footer> -->
 </html>
