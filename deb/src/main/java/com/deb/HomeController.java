@@ -51,7 +51,7 @@ public class HomeController {
 			@RequestParam("nyt_categories") String nyt_categories) {
 		// Get selected category
 
-		System.out.println("Categeory " + nyt_categories);
+		
 
 		if (categories == null) {
 			categories = new NewYorkTimesImpl().listCategories();
