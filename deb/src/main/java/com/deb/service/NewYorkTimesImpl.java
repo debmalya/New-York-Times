@@ -122,6 +122,9 @@ public class NewYorkTimesImpl implements NewYorkTimesServices {
 		JSONArray detailResult = getJSONResult(URLConstants.FIRST_PART_DETAIL_URL
 				+ sectionName + URLConstants.LAST_PART_DETAIL_URL);
 
+//		String url = URLConstants.FIRST_PART_DETAIL_URL
+//				+ sectionName + URLConstants.LAST_PART_DETAIL_URL;
+//		System.out.println(url);
 		List<CategoryDetails> categoryDetailList = new ArrayList<CategoryDetails>();
 
 		if (detailResult != null) {
@@ -133,7 +136,13 @@ public class NewYorkTimesImpl implements NewYorkTimesServices {
 				CategoryDetails categoryDetails = new CategoryDetails();
 				categoryDetails.setTitle((String) categoryDetailsJSON
 						.get("abstract"));
+//				String[] url = (String[]) categoryDetailsJSON.get("url");
+//				for (String each:url) {
+//					System.out.println(each);
+//				}
+				
 				categoryDetails.setUrl((String) categoryDetailsJSON.get("url"));
+				categoryDetails.setCreated_date((String) categoryDetailsJSON.get("created_date"));
 				categoryDetailList.add(categoryDetails);
 
 			}
